@@ -18,9 +18,10 @@ app.configure(function(){
 
 
 app.get('/', function(req, res){
-       res.render('index.html.jqtpl', {
-	       results: ""
-	   });
+	    res.render('index.html.jqtpl', {
+		    as : global,
+		    test : {"a" : ""}
+	       });
     });
 
 
@@ -40,10 +41,19 @@ app.post('/', function(req, res){
             body += data;  
         });  
         response.addListener("end", function() { 
-            console.log(body);
+	    ans = JSON.parse(body);
+	    render = [{}];
+            if (typeof ans.hits != 'undefined') {
+  	      for (var i = 0; i < ans.hits.total; i++) {
+		render[i] = {'a':JSON.stringify(ans.hits.hits[i])};
+	      }
+            }
+
+	    console.log(render);
 	    res.render('index.html.jqtpl', {
-			results: body
-		});
+		    as : global,
+		    test : render
+	       });
         });  
     });  
 
