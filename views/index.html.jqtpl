@@ -1,0 +1,22 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+</head>
+<body>
+
+<script></script>
+
+    <form method="post" action"/">
+        <input type="text" name="query" id="inputUser" />
+        <input type="submit" name="Submit" />
+        <div id="box">
+        </div>
+    </form>
+
+
+    <div style="display:block;">
+      <pre>${results}</pre>
+    </div>
+
+</body>
+</html>
