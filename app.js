@@ -20,11 +20,10 @@ app.post('/', function(req, res){
     console.log(req.param('query', null));
 
     var query = req.param('query', null);
-    var url_string = 'http://localhost:9200/products/_search?q='+escape(query)+'&pretty=true';
+    var url_string = 'http://localhost:9200/_search?q='+escape(query)+'&pretty=true';
 
-var twitter_client = http.createClient(9200, "localhost");  
-  
-    var request = twitter_client.request("GET", "/products/_search?q="+escape(query), {"host": "localhost"});  
+    var t_client = http.createClient(9200, "localhost");  
+    var request = t_client.request("GET", "/_search?q="+escape(query), {"host": "localhost"});  
   
     request.addListener("response", function(response) {  
         var body = "";  
@@ -34,43 +33,12 @@ var twitter_client = http.createClient(9200, "localhost");
   
         response.addListener("end", function() { 
             console.log(body);
+
+	    res.send(body);
         });  
     });  
 
-    request.close();
-
-
-
-    /*var options = {
-        host: 'localhost',
-        port: 9000,
-        path: '/products/_search?q='+escape(query)+'&pretty=true'
-    };*/
-
-/*    var options = { host: url_string };
-
-    console.log(options)
-
-    http.get(options, function(http_res) {
-        var data= "";
-
-        http_res.on('data', function (chunk) {
-            data += chunk;
-        });
-
-        http_res.on("end", function() {
-            console.log(data);
-        });
-    });*/
-
-    /*request.on('response', function (res) {
-        res.on('data', function (chunk) {
-            console.log(chunk);
-        });
-    });*/
-
-
-    console.log(url_string);
+    request.end();
 });
 
 
